@@ -17,8 +17,8 @@ const env = require("./env");
  *  prod: <ip used to reach the server>
  */
 const API_HOST = {
-    dev: "",
-    prod: ""
+    dev: "127.0.0.1",
+    prod: "api.conexdispatch.com"
 }[env];
 
 /*
@@ -27,8 +27,8 @@ const API_HOST = {
  * e.g: 8080
  */
 const API_PORT = {
-    dev: 0,
-    prod: 0
+    dev: 8080,
+    prod: 8080
 }[env];
 
 /*
@@ -37,12 +37,12 @@ const API_PORT = {
  * e.g: kin.today / static.kin.today
  */
 const API_HOSTNAME = {
-    dev: "",
-    prod: ""
+    dev: "api.conexdispatch.com",
+    prod: "api.conexdispatch.com"
 }[env];
 const STATIC_HOSTNAME = {
-    dev: "",
-    prod: ""
+    dev: "conexdispatch.com",
+    prod: "api.conexdispatch.com"
 }[env];
 
 const PROVIDER_NB_MONTHS_PAST = 6;

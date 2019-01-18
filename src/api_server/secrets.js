@@ -14,7 +14,7 @@ const SECRETS_MAPPING = {
      * Secret key used to encrypt the JWT token used for user authentication
      * https://github.com/azuqua/jwt-redis-session#initialization
      */
-    EXPRESS_SECRET: "",
+    EXPRESS_SECRET: "948372475934739573",
 
     /*
      * Paths to your certificate's private key and chain.
@@ -25,12 +25,12 @@ const SECRETS_MAPPING = {
      * HTTPS_CERT_FILE = /etc/letsencrypt/live/<YOUR_DOMAIN_NAME>/fullchain.pem
      */
     HTTPS_KEY_FILE: {
-        dev: "",
-        prod: ""
+        dev: "/etc/letsencrypt/live/api.conexdispatch.com/privkey.pem",
+        prod: "/etc/letsencrypt/live/api.conexdispatch.com/privkey.pem"
     },
     HTTPS_CERT_FILE: {
-        dev: "",
-        prod: ""
+        dev: "/etc/letsencrypt/live/api.conexdispatch.com/fullchain.pem",
+        prod: "/etc/letsencrypt/live/api.conexdispatch.com/fullchain.pem"
     },
 
     /*
@@ -69,12 +69,12 @@ const SECRETS_MAPPING = {
      * https://developers.facebook.com/apps
      */
     FACEBOOK_CLIENT_ID: {
-        dev: "",
-        prod: ""
+        dev: "240684313309925",
+        prod: "240684313309925"
     },
     FACEBOOK_CLIENT_SECRET: {
-        dev: "",
-        prod: ""
+        dev: "55c0b503484d01006b71778380b01c0b",
+        prod: "55c0b503484d01006b71778380b01c0b"
     },
 
     /*
@@ -94,14 +94,14 @@ const SECRETS_MAPPING = {
      * Google OAuth app secrets (required)
      * https://console.developers.google.com/projectselector/apis/credentials
      */
-    GOOGLE_CLIENT_ID: "",
-    GOOGLE_CLIENT_SECRET: "",
+    GOOGLE_CLIENT_ID: "782350237821-4dpnchm5sda25a4nldej79bp6s0t4cbp.apps.googleusercontent.com",
+    GOOGLE_CLIENT_SECRET: "KRUYL1kO88xGbWM7pSxGNb8Y",
 
     /*
      * Google Static Map API key (optional)
      * https://developers.google.com/maps/documentation/static-maps/
      */
-    GOOGLE_MAPS_KEY: "",
+    GOOGLE_MAPS_KEY: "AIzaSyA-XPwFLmJpwOrCNef0XvmrIn0P6oN7zoA",
 
     /*
      * Meetup OAuth app secrets (optional)
