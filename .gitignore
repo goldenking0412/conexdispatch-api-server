@@ -6,5 +6,5 @@
 /certs
 /coverage
 .DS_Store
-/src/api_server/config.js
-/src/api_server/secrets.js
+src/api_server/config.js
+src/api_server/secrets.js
