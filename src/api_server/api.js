@@ -28,6 +28,7 @@ const events_router = require("./routers/events");
 const layers_router = require("./routers/layers");
 const sources_router = require("./routers/sources");
 const user_router = require("./routers/user");
+const dispatches_router = require("./routers/dispatches");
 
 const express = require("express");
 const fs = require("fs");
@@ -92,6 +93,7 @@ app.use(`/${API_VERSION}/events`, events_router.router);
 app.use(`/${API_VERSION}/layers`, layers_router.router);
 app.use(`/${API_VERSION}/sources`, sources_router.router);
 app.use(`/${API_VERSION}/user`, user_router.router);
+app.use(`/${API_VERSION}/dispatches`, dispatches_router.router);
 
 _.forEach(auth_routers, (auth_router, source_name) => {
     app.use(`/${API_VERSION}/source/${source_name}`, auth_router);
