@@ -48,22 +48,23 @@ router.post("/location", (req, res, next) => {
 // Match
 
 router.get("/matches", (req, res, next) => {
-    const sql = `SELECT m.id, l.name as location_name, u.name as user, u.phone_number as phone_number 
+    const sql = `SELECT m.id, l.name as location_name, u.id as driver_id, u.name as user, u.phone_number as phone_number 
                 FROM matches m 
                 LEFT JOIN users u ON m.user_id = u.id 
                 LEFT JOIN locations l ON l.id = m.location_id`;
     con.query(sql, (err, matches) => {
         if (err) throw err;
-        const location_sql = "SELECT id, name as location_name from locations";
+        const location_sql = "SELECT id as location_id, name as location_name from locations";
         con.query(location_sql, (_err, locations) => {
             if (_err) throw _err;
             let _locations = locations;
             for (let i = _locations.length - 1; i >= 0; i-=1) {
                 _locations[i].drivers = [];
-                for (let j = matches.length - 1; j >= 0; j-=1) {
+                for (let j = 0; j < matches.length; j+=1) {
                     if (matches[j].location_name === _locations[i].location_name) {
                         const _match = matches[j];
                         const _t = {};
+                        _t.user_id = _match.driver_id;
                         _t.name = _match.user;
                         _t.phone_number = _match.phone_number;
                         // _t.phone_number = _match.phone_number;
@@ -71,7 +72,7 @@ router.get("/matches", (req, res, next) => {
                     }
                 }
             }
-            _locations = _.orderBy(_locations, ["id"], ["asc"]);
+            _locations = _.orderBy(_locations, ["location_id"], ["asc"]);
             res.json(_locations);
             next();
         });
@@ -147,6 +148,7 @@ router.get("/user", (req, res, next) => {
 
 router.post("/invoice/add", (req, res, next) => {
     // TODO: add new dispatch to db
+    res.json("aaa");
     next();
 });
 
@@ -158,6 +160,46 @@ router.get("/invoice", (req, res, next) => {
 router.get("/invoice/range", (req, res, next) => {
     // TODO: return all invoices in certain range from start_date to end_date
     next();
+});
+
+router.get("/events", (req, res, next) => {
+    // TODO: return all invoices in certain range from start_date to end_date
+
+    const sql = "SELECT * from events";
+    con.query(sql, (err, result) => {
+        if (err) throw err;
+        let _result = result;
+        for (i in _result) {
+            _result[i].date = _result[i].date.toISOString().substring(0,10);
+        }
+        res.json(_result);
+        next();
+    });
+});
+
+router.get("/all", (req, res, next) => {
+    // TODO: return all invoices in certain range from start_date to end_date
+
+    const sql_event = "SELECT * from events";
+    const sql_match = "SELECT * from matches";
+    const sql_driver = "SELECT * from users WHERE role = 4";
+    con.query(sql_event, (evt_err, evt_result) => {
+        if (evt_err) throw evt_err;
+        con.query(sql_match, (mch_err, mch_result) => {
+            if (mch_err) throw mch_err;
+            con.query(sql_driver, (drv_err, drv_result) => {
+                if (drv_err) throw drv_err;
+                res.json(
+                    {
+                        "events": evt_result,
+                        "matches": mch_result,
+                        "drivers": drv_result
+                    }
+                );
+                next();
+            });
+        });
+    });
 });
 
 module.exports = {
