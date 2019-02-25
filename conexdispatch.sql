@@ -16,21 +16,21 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `invoices`
+-- Table structure for table `events`
 --
 
-DROP TABLE IF EXISTS `invoices`;
+DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `invoices` (
+CREATE TABLE `events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `assigned` int(11) DEFAULT NULL,
+  `assigned` tinyint(4) DEFAULT NULL,
   `ready` int(11) DEFAULT NULL,
   `invoice_no` varchar(45) NOT NULL,
   `location_id` int(11) DEFAULT NULL,
   `driver_id` int(11) DEFAULT NULL,
   `invoice_creator` int(11) NOT NULL,
-  `date` datetime DEFAULT NULL,
+  `date` date DEFAULT NULL,
   `payment_status` varchar(45) DEFAULT NULL,
   `payment_gateway` varchar(45) DEFAULT NULL,
   `title` varchar(45) DEFAULT NULL,
@@ -38,31 +38,32 @@ CREATE TABLE `invoices` (
   `line_item` varchar(45) DEFAULT NULL,
   `expected_delivery_time` varchar(45) DEFAULT NULL,
   `expected_ext_time` varchar(45) DEFAULT NULL,
-  `delivery_address` varchar(45) DEFAULT NULL,
+  `delivery_address` varchar(255) DEFAULT NULL,
   `color` varchar(45) DEFAULT NULL,
   `delivery_progress` int(11) DEFAULT NULL,
-  `on_site_contact` varchar(45) DEFAULT NULL,
-  `total_order` varchar(45) DEFAULT NULL,
-  `customer_info` varchar(45) DEFAULT NULL,
-  `sales_rep` varchar(45) DEFAULT NULL,
-  `notes` varchar(45) DEFAULT NULL,
-  `quote_url` varchar(45) DEFAULT NULL,
-  `latest_invoice_url` varchar(45) DEFAULT NULL,
-  `po_number` varchar(45) DEFAULT NULL,
+  `on_site_contact` varchar(255) DEFAULT NULL,
+  `total_order` varchar(255) DEFAULT NULL,
+  `customer_info` varchar(255) DEFAULT NULL,
+  `sales_rep` int(11) DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `quote_url` varchar(1000) DEFAULT NULL,
+  `latest_invoice_url` varchar(1000) DEFAULT NULL,
+  `po_number` varchar(255) DEFAULT NULL,
   `active` tinyint(4) DEFAULT '1',
   `is_deleted` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) /*!50100 TABLESPACE `mysql` */ ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `invoices`
+-- Dumping data for table `events`
 --
 
-LOCK TABLES `invoices` WRITE;
-/*!40000 ALTER TABLE `invoices` DISABLE KEYS */;
-/*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
+LOCK TABLES `events` WRITE;
+/*!40000 ALTER TABLE `events` DISABLE KEYS */;
+INSERT INTO `events` VALUES (1,0,0,'#INV-014254',1,1,1,'2019-02-23','paid','COD','JEFF OAK','','40HC','00:00','03:00','2800 Camino Diablo, Byron CA','#F1F11F',60,'Fernando 408-483-7165 / Stephanie 408-529-7268','OAK 40\' Used Standard Certified Cargo Worthy ISO Container(2), MOD Paint Custom Color 40\' Exterior(2), OAK Freight(2)','Robert A Bothman Construction\\nSergio Maciel\\nPhone: (408) 316-5785, Mobile:',2,NULL,'https://crm.zoho.com/crm/tab/Quotes/2397724000013221008','https://client.conexwest.com/app#/invoices/1175392000004297183','17',1,0);
+/*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -178,4 +179,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-20  5:13:28
+-- Dump completed on 2019-02-26  0:49:06
