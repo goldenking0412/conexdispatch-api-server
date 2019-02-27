@@ -41,9 +41,25 @@ router.get("/locations", (req, res, next) => {
     })
 });
 
-router.post("/locations/add", (req, res, next) => {
+router.post("/location/add", (req, res, next) => {
     // TODO: Insert data to db
-    next();
+
+    req.setEncoding('utf8');
+    req.pipe(concat(function(data){
+        req.body = data;
+    
+        const sql = `INSERT INTO locations (name) VALUES ("${req.body}")`;
+
+        con.query(sql, (err, result) => {
+            if (err) {
+                res.json(err);
+                next();
+            }
+            res.json(result);
+            next();
+        });
+
+    }));
 });
 
 router.post("/location", (req, res, next) => {
@@ -54,34 +70,11 @@ router.post("/location", (req, res, next) => {
 // Match
 
 router.get("/matches", (req, res, next) => {
-    const sql = `SELECT m.id, l.name as location_name, u.id as driver_id, u.name as user, u.phone_number as phone_number 
-                FROM matches m 
-                LEFT JOIN users u ON m.user_id = u.id 
-                LEFT JOIN locations l ON l.id = m.location_id`;
+    const sql = `SELECT * FROM matches`;
     con.query(sql, (err, matches) => {
         if (err) throw err;
-        const location_sql = "SELECT id as location_id, name as location_name from locations";
-        con.query(location_sql, (_err, locations) => {
-            if (_err) throw _err;
-            let _locations = locations;
-            for (let i = _locations.length - 1; i >= 0; i-=1) {
-                _locations[i].drivers = [];
-                for (let j = 0; j < matches.length; j+=1) {
-                    if (matches[j].location_name === _locations[i].location_name) {
-                        const _match = matches[j];
-                        const _t = {};
-                        _t.user_id = _match.driver_id;
-                        _t.name = _match.user;
-                        _t.phone_number = _match.phone_number;
-                        // _t.phone_number = _match.phone_number;
-                        _locations[i].drivers.push(_t);
-                    }
-                }
-            }
-            _locations = _.orderBy(_locations, ["location_id"], ["asc"]);
-            res.json(_locations);
-            next();
-        });
+        res.json(matches);
+        next();
     });
 });
 
@@ -133,6 +126,26 @@ router.get("/users/drivers", (req, res, next) => {
         res.json(result);
         next();
     })
+});
+
+router.post("/users/driver/add", (req, res, next) => {
+
+    req.setEncoding('utf8');
+    req.pipe(concat(function(data){
+        // req.body = data;
+    
+        const sql = `INSERT INTO users (name, phone_number, role) VALUES ("${data.name}", "${data.phone_number}", "4")`;
+
+        con.query(sql, (err, result) => {
+            if (err) {
+                res.json(err);
+                next();
+            }
+            res.json(result);
+            next();
+        });
+
+    }));
 });
 
 router.post("/user/add", (req, res, next) => {
