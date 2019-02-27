@@ -9,6 +9,12 @@ const express = require("express");
 
 const mysql = require("mysql");
 
+const querystring = require("querystring");
+
+const concat = require("concat-stream");
+
+const bodyParser = require("body-parser");
+
 const router = express.Router(); // eslint-disable-line new-cap
 
 const con = mysql.createConnection({
@@ -144,20 +150,58 @@ router.get("/user", (req, res, next) => {
     next();
 });
 
-// Invoice
+// Event
 
-router.post("/invoice/add", (req, res, next) => {
+router.post("/event/add", (req, res, next) => {
     // TODO: add new dispatch to db
+
+    req.setEncoding('utf8');
+    req.pipe(concat(function(data){
+        req.body = data;
+        const requestData = JSON.parse(req.body);
+    
+        const sql = `INSERT INTO events (
+                        assigned, ready, invoice_no, location_id, driver_id, event_creator,
+                        date, payment_status, payment_gateway, title, description, line_item,
+                        expected_delivery_time, expected_ext_time, delivery_address, color,
+                        delivery_progress, on_site_contact, total_order, customer_info, 
+                        sales_rep, notes, quote_url, latest_invoice_url, po_number)
+                    VALUES (
+                        "${requestData.assigned}", "${requestData.ready}", "${requestData.invoice_no}", 
+                        "${requestData.location_id}", "${requestData.driver_id}", "${requestData.event_creator}", 
+                        "${requestData.date}", "${requestData.payment_status}", "${requestData.payment_gateway}", 
+                        "${requestData.title}", "${requestData.description}", "${requestData.line_item}", 
+                        "${requestData.expected_delivery_time}", "${requestData.expected_ext_time}", 
+                        "${requestData.delivery_address}", "${requestData.color}", "${requestData.delivery_progress}", 
+                        "${requestData.on_site_contact}", "${requestData.total_order}", "${requestData.customer_info}", 
+                        "${requestData.sales_rep}", "${requestData.notes}", "${requestData.quote_url}", 
+                        "${requestData.latest_invoice_url}", "${requestData.po_number}")`;
+
+        con.query(sql, (err, result) => {
+            if (err) {
+                res.json(err);
+                next();
+            }
+            res.json(result);
+            next();
+        });
+
+    }));
+});
+
+router.post("/event/update", (req, res, next) => {
+    // TODO: add new dispatch to db
+    console.info(req);
     res.json("aaa");
     next();
 });
 
-router.get("/invoice", (req, res, next) => {
+router.get("/event", (req, res, next) => {
     // TODO: return invoice data by id
     next();
 });
 
-router.get("/invoice/range", (req, res, next) => {
+router.get("/events/range", (req, res, next) => {
     // TODO: return all invoices in certain range from start_date to end_date
     next();
 });
@@ -168,8 +212,8 @@ router.get("/events", (req, res, next) => {
     const sql = "SELECT * from events";
     con.query(sql, (err, result) => {
         if (err) throw err;
-        let _result = result;
-        for (i in _result) {
+        const _result = result;
+        for (let i = _result.length - 1; i >= 0; i-=1) {
             _result[i].date = _result[i].date.toISOString().substring(0,10);
         }
         res.json(_result);
