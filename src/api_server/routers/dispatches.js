@@ -269,11 +269,11 @@ router.get("/events", (req, res, next) => {
     const sql = "SELECT * from events";
     con.query(sql, (err, result) => {
         if (err) throw err;
-        const _result = result;
-        for (let i = _result.length - 1; i >= 0; i-=1) {
-            _result[i].date = _result[i].date.toISOString().substring(0,10);
-        }
-        res.json(_result);
+        // const _result = result;
+        // for (let i = _result.length - 1; i >= 0; i-=1) {
+        //     _result[i].date = _result[i].date.toISOString().substring(0,10);
+        // }
+        res.json(result);
         next();
     });
 });
