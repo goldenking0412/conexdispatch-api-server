@@ -30,7 +30,7 @@ CREATE TABLE `events` (
   `location_id` int(11) DEFAULT NULL,
   `driver_id` int(11) DEFAULT NULL,
   `event_creator` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
+  `date` varchar(25) DEFAULT NULL,
   `payment_status` varchar(45) DEFAULT NULL,
   `payment_gateway` varchar(45) DEFAULT NULL,
   `title` varchar(45) DEFAULT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE `events` (
   `is_deleted` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) /*!50100 TABLESPACE `mysql` */ ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) /*!50100 TABLESPACE `mysql` */ ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (1,0,0,'#INV-014254',1,1,1,'2019-02-22','paid','COD','JEFF OAK','','40HD','00:00','03:00','2800 Camino Diablo, Byron CA','#F1F11F',60,'Fernando 408-483-7165 / Stephanie 408-529-7268','OAK 40\' Used Standard Certified Cargo Worthy ISO Container(2), MOD Paint Custom Color 40\' Exterior(2), OAK Freight(2)','Robert A Bothman Construction\nSergio Maciel\nPhone: (408) 316-5785, Mobile:',2,'null','https://crm.zoho.com/crm/tab/Quotes/2397724000013221008','https://client.conexwest.com/app#/invoices/1175392000004297183','17',1,0),(2,0,0,'123456',-1,-1,0,'2019-02-26','paid','COD','aaa','','40HD','0','0','Camino','#00B430',0,'https://','aaas','https://',1,'awefwef','https://','https://','111',1,0),(4,0,0,'',-1,-1,0,'2019-02-26','','','','','','','','','#00B430',0,'','','',-1,'','','','',1,0);
+INSERT INTO `events` VALUES (2,1,0,'123456',1,1,0,'2019-02-26','paid','COD','aaa','','40HD','0','0','Camino','#00B430',60,'https://','aaas','https://',1,'awefwef','https://','https://','111',1,0),(11,0,0,'123123',-1,-1,0,'2019-02-26','','','bbb','','','','','','#00B430',0,'','','',-1,'','','','',1,0),(13,0,0,'123456',-1,-1,0,'2019-02-26','','','Jeff OAK9','','40HA','','','','#00B430',0,'','','',-1,'','','','',1,0);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,7 +79,7 @@ CREATE TABLE `locations` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `locations` (
 
 LOCK TABLES `locations` WRITE;
 /*!40000 ALTER TABLE `locations` DISABLE KEYS */;
-INSERT INTO `locations` VALUES (6,'AMZ'),(10,'BIM'),(7,'BMO'),(2,'CHI'),(12,'COC'),(3,'DER'),(5,'IBM'),(11,'LIT'),(8,'LLC'),(1,'OAK'),(4,'PAC'),(9,'YYI');
+INSERT INTO `locations` VALUES (6,'AMZ'),(10,'BIM'),(7,'BMO'),(2,'CHI'),(12,'COC'),(3,'DER'),(5,'IBM'),(11,'LIT'),(8,'LLC'),(1,'OAK'),(4,'PAC'),(19,'QAZ'),(18,'QWE'),(9,'YYI');
 /*!40000 ALTER TABLE `locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +102,7 @@ DROP TABLE IF EXISTS `matches`;
 CREATE TABLE `matches` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `location_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
+  `driver_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
@@ -157,7 +157,7 @@ CREATE TABLE `users` (
   `phone_number` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,7 +166,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Jeff Carter','4','+1 609 223 2323'),(2,'Habib Nurmagomedov','4','+1 609 223 2323'),(3,'Vitali Barkouski','4','+1 609 223 2323'),(4,'Alex Rozkin','4','+1 609 223 2323'),(5,'Brock Fegan','4','+1 609 223 2323'),(6,'Scott Russel','4','+1 609 223 2323'),(7,'Andrew Sokol','4','+1 609 223 2323'),(8,'Alex Viking','4','+1 609 223 2323'),(9,'Saif Olauri','4','+1 609 223 2323'),(10,'Edwin Cock','4','+1 609 223 2323'),(11,'Sergey Vasiliev','4','+1 609 223 2323'),(12,'Len Rock','4','+1 609 223 2323'),(13,'Dmitry Kolin','4','+1 609 223 2323'),(14,'Alan Paul','4','+1 609 223 2323');
+INSERT INTO `users` VALUES (1,'Jeff Carter','4','+1 609 223 2323'),(2,'Habib Nurmagomedov','4','+1 609 223 2323'),(3,'Vitali Barkouski','4','+1 609 223 2323'),(4,'Alex Rozkin','4','+1 609 223 2323'),(5,'Brock Fegan','4','+1 609 223 2323'),(6,'Scott Russel','4','+1 609 223 2323'),(7,'Andrew Sokol','4','+1 609 223 2323'),(8,'Alex Viking','4','+1 609 223 2323'),(9,'Saif Olauri','4','+1 609 223 2323'),(10,'Edwin Cock','4','+1 609 223 2323'),(11,'Sergey Vasiliev','4','+1 609 223 2323'),(12,'Len Rock','4','+1 609 223 2323'),(13,'Dmitry Kolin','4','+1 609 223 2323'),(14,'Alan Paul','4','+1 609 223 2323'),(15,'undefined','4','undefined');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -179,4 +179,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-27 21:46:04
+-- Dump completed on 2019-02-28  4:38:04

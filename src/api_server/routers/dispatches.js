@@ -78,14 +78,25 @@ router.get("/matches", (req, res, next) => {
     });
 });
 
-router.post("/matches/add", (req, res, next) => {
+router.post("/match/add", (req, res, next) => {
     // TODO: Insert new match to db
-    const sql = "INSERT ";
-    con.query(sql, (err, result) => {
-        if (err) throw err;
-        res.json(result);
-        next();
-    })
+    req.setEncoding('utf8');
+    req.pipe(concat(function(data){
+        // req.body = data;
+        const requestData = JSON.parse(data);
+    
+        const sql = `INSERT INTO matches (location_id, driver_id) VALUES ("${requestData.location_id}", "${requestData.driver_id}")`;
+
+        con.query(sql, (err, result) => {
+            if (err) {
+                res.json(err);
+                next();
+            }
+            res.json(result);
+            next();
+        });
+
+    }));
 });
 
 router.get("/matches/location", (req, res, next) => {
